@@ -270,7 +270,7 @@ public class EmbeddedSQL {
 
    public static void Query3(EmbeddedSQL esql){
   	try{
-         String query = " SELECT s.sname, COUNT(*) AS pcount FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND s.sid IN (SELECT s.sid FROM suppliers s, parts p, catalog cWHERE s.sid = c.sid AND p.pid = c.pid AND p.color = 'Green' EXCEPT SELECT s2.sid FROM suppliers s2, parts p2, catalog c2 WHERE s2.sid = c2.sid AND p2.pid = c2.pid AND p2.color != 'Green' ) GROUP BY s.sname";
+         String query = " SELECT s.sname, COUNT(*) AS pcount FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND s.sid IN (SELECT s.sid FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND p.color = 'Green' EXCEPT SELECT s2.sid FROM suppliers s2, parts p2, catalog c2 WHERE s2.sid = c2.sid AND p2.pid = c2.pid AND p2.color != 'Green' ) GROUP BY s.sname";
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
       }catch(Exception e){
