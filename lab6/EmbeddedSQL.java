@@ -280,8 +280,7 @@ public class EmbeddedSQL {
 
    public static void Query4(EmbeddedSQL esql){
   	try{
-         String query = "SELECT s.sname, MAX(c.cost) FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND s.sid IN(SELECT s.sid FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND p.color ='Green'INTERSECT SELECT s2.sid FROM suppliers s2, parts p2, catalog c WHERE s2.sid = c.sid AND p2.pid = c.pid AND p2.color = 'Red') GROUP BY s.sname;
- ";
+         String query = "SELECT s.sname, MAX(c.cost) FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND s.sid IN(SELECT s.sid FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND p.color ='Green'INTERSECT SELECT s2.sid FROM suppliers s2, parts p2, catalog c WHERE s2.sid = c.sid AND p2.pid = c.pid AND p2.color = 'Red') GROUP BY s.sname";
          int rowCount = esql.executeQuery(query);
          System.out.println ("total row(s): " + rowCount);
       }catch(Exception e){
@@ -304,9 +303,18 @@ public class EmbeddedSQL {
    }//end Query5
 
    public static void Query6(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
-   }//end Query6
+ try{
+         String query = "SELECT address FROM catalog c, parts p, suppliers s WHERE c.pid = p.pid AND c.sid = s.sid AND pname =";
+         System.out.print("\tEnter name: $");
+         String input = in.readLine();
+         query += "'" + input + "'";
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
+   
+}//end Query6
 
 }//end EmbeddedSQL
