@@ -249,33 +249,58 @@ public class EmbeddedSQL {
    }//end QueryExample
    
    public static void Query1(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+  	try{
+         String query = "SELECT s.sid, COUNT(*) AS pcount FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid GROUP BY s.sid ";
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
    }//end Query1
 
    public static void Query2(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+   	try{
+         String query = " SELECT s.sid, COUNT(*) AS pcount FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid GROUP BY s.sid HAVING COUNT(*) > 2";
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
    }//end Query2
 
    public static void Query3(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+  	try{
+         String query = " SELECT s.sname, COUNT(*) AS pcountFROM suppliers s, parts p, catalog cWHERE s.sid = c.sid AND p.pid = c.pid AND s.sid IN (SELECT s.sidFROM suppliers s, parts p, catalog cWHERE s.sid = c.sid AND p.pid = c.pid AND p.color = 'Green' EXCEPT SELECT s2.sid FROM suppliers s2, parts p2, catalog c2 WHERE s2.sid = c2.sid AND p2.pid = c2.pid AND p2.color != 'Green' ) GROUP BY s.sname";
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
    }//end Query3
 
    public static void Query4(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+  	try{
+         String query = "SELECT s.sname, MAX(c.cost) FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND s.sid IN(SELECT s.sid FROM suppliers s, parts p, catalog c WHERE s.sid = c.sid AND p.pid = c.pid AND p.color ='Green'INTERSECT SELECT s2.sid FROM suppliers s2, parts p2, catalog c WHERE s2.sid = c.sid AND p2.pid = c.pid AND p2.color = 'Red') GROUP BY s.sname;
+ ";
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
    }//end Query4
 
    public static void Query5(EmbeddedSQL esql){
-      // Your code goes here.
-      // ...
-      // ...
+   try{
+         String query = "SELECT pname FROM catalog c, parts p WHERE c.pid = p.pid AND c.cost < ";
+         System.out.print("\tEnter cost: $");
+         String input = in.readLine();
+         query += input;
+
+         int rowCount = esql.executeQuery(query);
+         System.out.println ("total row(s): " + rowCount);
+      }catch(Exception e){
+         System.err.println (e.getMessage());
+      }
    }//end Query5
 
    public static void Query6(EmbeddedSQL esql){
